@@ -67,6 +67,10 @@ class RuleController
 
         $errors = $schemaManager->configurationFor($ruleType)->validate($params);
 
+        if (empty($errors) && $ruleRepo->existsRule($tenantId, $ruleType)) {
+            $errors[] = "A rule of type '{$ruleType->value}' already exists for this tenant.";
+        }
+
         if (!empty($errors)) {
             $this->render('rules/create', [
                 'tenantId' => $tenantId,

@@ -9,6 +9,7 @@ use DocPlatform\RuleConfiguration\RuleType;
 
 interface ValidationRuleRepositoryInterface
 {
+    public function existsRule(string $tenantId, RuleType $ruleType): bool;
     public function addRule(string $tenantId, RuleType $ruleType, array $parameters): int;
     public function updateRule(string $tenantId, int $ruleId, array $parameters): void;
     public function removeRule(string $tenantId, int $ruleId): void;

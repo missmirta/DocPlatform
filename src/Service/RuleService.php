@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DocPlatform\Service;
 
+use DocPlatform\Exceptions\DuplicateRuleTypeException;
 use DocPlatform\Exceptions\RuleNotFoundException;
 use DocPlatform\Model\Document;
 use DocPlatform\Repository\Contracts\ValidationRuleRepositoryInterface;
@@ -22,6 +23,10 @@ final class RuleService implements RuleServiceInterface
 
     public function add(string $tenantId, RuleType $ruleType, array $parameters): int
     {
+        if ($this->repository->existsRule($tenantId, $ruleType)) {
+            throw new DuplicateRuleTypeException($ruleType->value);
+        }
+
         $validated = $this->configManager
             ->configurationFor($ruleType)
             ->validateAndMergeDefaults($parameters);

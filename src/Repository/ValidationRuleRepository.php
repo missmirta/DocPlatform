@@ -43,6 +43,14 @@ final class ValidationRuleRepository implements ValidationRuleRepositoryInterfac
         );
     }
 
+    public function existsRule(string $tenantId, RuleType $ruleType): bool
+    {
+        $pdo  = $this->registry->getConnectionFor($tenantId);
+        $stmt = $pdo->prepare('SELECT COUNT(*) FROM validation_rules WHERE rule_type = :type');
+        $stmt->execute([':type' => $ruleType->value]);
+        return (int) $stmt->fetchColumn() > 0;
+    }
+
     public function addRule(string $tenantId, RuleType $ruleType, array $parameters): int
     {
         $pdo  = $this->registry->getConnectionFor($tenantId);

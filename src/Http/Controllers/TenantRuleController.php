@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DocPlatform\Http\Controllers;
 
+use DocPlatform\Exceptions\DuplicateRuleTypeException;
 use DocPlatform\Exceptions\InvalidRuleParametersException;
 use DocPlatform\Exceptions\RuleNotFoundException;
 use DocPlatform\Exceptions\UnknownRuleTypeException;
@@ -33,6 +34,8 @@ final class TenantRuleController
                 $storeRequest->parameters,
             );
             return Response::json(['id' => $id], 201);
+        } catch (DuplicateRuleTypeException $e) {
+            return Response::json(['error' => $e->getMessage()], 409);
         } catch (InvalidRuleParametersException $e) {
             return Response::json(['errors' => $e->getErrors()], 422);
         } catch (UnknownRuleTypeException $e) {
