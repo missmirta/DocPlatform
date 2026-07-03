@@ -12,6 +12,20 @@ php -S localhost:8080 -t public
 
 Open `http://localhost:8080` — you will be redirected to the rules list for the first tenant.
 
+## Demo
+
+**Rule Configuration** — manage per-tenant validation rules:
+
+![Rule Configuration](docs/rule-configuration.png)
+
+**Document Rejected** — all validation errors shown in one response:
+
+![Validation Rejected](docs/validation-rejected.png)
+
+**Document Accepted** — document passes all rules and is saved:
+
+![Validation Accepted](docs/validation-accepted.png)
+
 ## Design Reasoning
 
 Validation rules are modelled as interchangeable strategies, each implementing a single `ValidationRuleInterface::validate(Document): array` method. The validator runs every applicable rule and collects all errors — so a submitter sees every problem in one response rather than discovering violations one at a time. 
