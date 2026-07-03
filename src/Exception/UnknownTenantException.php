@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DocPlatform\Exceptions;
+namespace DocPlatform\Exception;
 
 use RuntimeException;
 

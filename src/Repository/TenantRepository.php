@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DocPlatform\Repository;
 
-use DocPlatform\Exceptions\UnknownTenantException;
+use DocPlatform\Exception\UnknownTenantException;
 use DocPlatform\Repository\Contracts\TenantRepositoryInterface;
 use PDO;
 

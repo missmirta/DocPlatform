@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DocPlatform\Repository;
 
-use DocPlatform\Exceptions\RuleNotFoundException;
+use DocPlatform\Exception\RuleNotFoundException;
 use DocPlatform\Model\ValidationRule;
 use DocPlatform\Repository\Contracts\TenantRepositoryInterface;
 use DocPlatform\Repository\Contracts\ValidationRuleRepositoryInterface;

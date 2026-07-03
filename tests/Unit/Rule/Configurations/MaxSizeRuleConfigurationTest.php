@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Rule\Configurations;
 
-use DocPlatform\Exceptions\InvalidRuleParametersException;
+use DocPlatform\Exception\InvalidRuleParametersException;
 use DocPlatform\Rule\Configurations\MaxSizeRule;
 use DocPlatform\Rule\Rules\MaxSizeRule as MaxSizeRuleImpl;
 use PHPUnit\Framework\Attributes\CoversClass;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DocPlatform\Rule;
 
-use DocPlatform\Exceptions\InvalidRuleParametersException;
+use DocPlatform\Exception\InvalidRuleParametersException;
 use DocPlatform\Rule\Contracts\ValidationRuleInterface;
 
 abstract class AbstractRuleConfiguration

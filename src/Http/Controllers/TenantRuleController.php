@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace DocPlatform\Http\Controllers;
 
-use DocPlatform\Exceptions\DuplicateRuleTypeException;
-use DocPlatform\Exceptions\InvalidRuleParametersException;
-use DocPlatform\Exceptions\RuleNotFoundException;
-use DocPlatform\Exceptions\UnknownRuleTypeException;
+use DocPlatform\Exception\DuplicateRuleTypeException;
+use DocPlatform\Exception\InvalidRuleParametersException;
+use DocPlatform\Exception\RuleNotFoundException;
+use DocPlatform\Exception\UnknownRuleTypeException;
 use DocPlatform\Http\Request;
 use DocPlatform\Http\Requests\StoreRuleRequest;
 use DocPlatform\Http\Response;

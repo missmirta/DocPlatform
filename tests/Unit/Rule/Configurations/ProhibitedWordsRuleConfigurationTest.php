@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Rule\Configurations;
 
-use DocPlatform\Exceptions\InvalidRuleParametersException;
+use DocPlatform\Exception\InvalidRuleParametersException;
 use DocPlatform\Rule\Configurations\ProhibitedWordsRule;
 use DocPlatform\Rule\Rules\ProhibitedWordsRule as ProhibitedWordsRuleImpl;
 use PHPUnit\Framework\Attributes\CoversClass;

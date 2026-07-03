@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DocPlatform\Rule;
 
-use DocPlatform\Exceptions\UnknownRuleTypeException;
+use DocPlatform\Exception\UnknownRuleTypeException;
 use DocPlatform\Rule\Contracts\RuleConfigurationRegistryInterface;
 use DocPlatform\Rule\Contracts\ValidationRuleInterface;
 use DocPlatform\Rule\Enum\RuleType;

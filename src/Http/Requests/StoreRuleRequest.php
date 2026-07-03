@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DocPlatform\Http\Requests;
 
-use DocPlatform\Exceptions\InvalidRuleParametersException;
-use DocPlatform\Exceptions\UnknownRuleTypeException;
+use DocPlatform\Exception\InvalidRuleParametersException;
+use DocPlatform\Exception\UnknownRuleTypeException;
 use DocPlatform\Rule\Enum\RuleType;
 
 final class StoreRuleRequest

@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace DocPlatform\Service;
 
-use DocPlatform\Exceptions\DuplicateRuleTypeException;
-use DocPlatform\Exceptions\RuleNotFoundException;
+use DocPlatform\Exception\DuplicateRuleTypeException;
+use DocPlatform\Exception\RuleNotFoundException;
 use DocPlatform\Model\Document;
 use DocPlatform\Model\ValidationResult;
 use DocPlatform\Repository\Contracts\ValidationRuleRepositoryInterface;

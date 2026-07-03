@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Rule\Configurations;
 
-use DocPlatform\Exceptions\InvalidRuleParametersException;
+use DocPlatform\Exception\InvalidRuleParametersException;
 use DocPlatform\Rule\Configurations\AllowedContentTypeRule;
 use DocPlatform\Rule\Rules\AllowedContentTypeRule as AllowedContentTypeRuleImpl;
 use PHPUnit\Framework\Attributes\CoversClass;

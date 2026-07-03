@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Rule;
 
-use DocPlatform\Exceptions\UnknownRuleTypeException;
+use DocPlatform\Exception\UnknownRuleTypeException;
 use DocPlatform\Rule\Configurations\MaxSizeRule as MaxSizeConfig;
 use DocPlatform\Rule\Configurations\ProhibitedWordsRule as ProhibitedWordsConfig;
 use DocPlatform\Rule\Enum\RuleType;
