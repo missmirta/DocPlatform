@@ -12,8 +12,7 @@ use DocPlatform\Rule\Enum\RuleType;
 use DocPlatform\Rule\RuleConfigurationManager;
 use DocPlatform\Service\ValidatorService;
 
-// According to Test task:
-//Provide a short integration script that demonstrates:
+// Short integration script that demonstrates:
 //–	Creating several validation rules
 //–	Creating a validator
 //–	Determining which validation rules apply for a given tenant ID
