@@ -1,0 +1,29 @@
+# Dependencies
+/vendor/
+
+# Runtime & cache
+/runtime/
+*.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# PHPStorm
+.idea/
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads
+/templates/upload/
+
+# Test coverage
+/coverage/
+/.phpunit.cache/
+/.phpunit.result.cache
