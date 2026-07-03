@@ -56,11 +56,11 @@ try {
     } elseif ($method === 'GET' && $path === '/rules/create') {
         (new RuleController())->create($tenantId, $app->configManager, $app->registry);
     } elseif ($method === 'POST' && $path === '/rules/create') {
-        (new RuleController())->store($_POST, $app->ruleRepository, $app->configManager, $app->registry);
+        (new RuleController())->store($_POST, $app->ruleRepository, $app->configManager, $app->registry, $app->paramCaster);
     } elseif ($method === 'GET' && $path === '/rules/edit') {
-        (new RuleController())->edit($tenantId, (int)($_GET['id'] ?? 0), $app->ruleRepository, $app->configManager, $app->registry);
+        (new RuleController())->edit($tenantId, (int)($_GET['id'] ?? 0), $app->ruleRepository, $app->configManager, $app->registry, $app->paramCaster);
     } elseif ($method === 'POST' && $path === '/rules/edit') {
-        (new RuleController())->update($_POST, $app->ruleRepository, $app->configManager, $app->registry);
+        (new RuleController())->update($_POST, $app->ruleRepository, $app->configManager, $app->registry, $app->paramCaster);
     } elseif ($method === 'POST' && $path === '/rules/delete') {
         (new RuleController())->destroy($_POST, $app->ruleRepository, $app->registry);
     } elseif ($method === 'GET' && $path === '/upload') {

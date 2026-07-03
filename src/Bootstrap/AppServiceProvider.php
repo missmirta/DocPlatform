@@ -16,6 +16,7 @@ use DocPlatform\RuleConfiguration\Configurations\MetadataValueFormatRule;
 use DocPlatform\RuleConfiguration\Configurations\ProhibitedWordsRule;
 use DocPlatform\RuleConfiguration\Configurations\RequiredMetadataRule;
 use DocPlatform\RuleConfiguration\RuleConfigurationManager;
+use DocPlatform\RuleConfiguration\RuleParamCaster;
 use DocPlatform\RuleConfiguration\RuleType;
 use DocPlatform\Service\Contracts\ValidatorServiceInterface;
 use DocPlatform\Service\RuleService;
@@ -26,6 +27,7 @@ final class AppServiceProvider
 {
     public readonly TenantRepositoryInterface $registry;
     public readonly RuleConfigurationManager $configManager;
+    public readonly RuleParamCaster $paramCaster;
     public readonly ValidationRuleRepositoryInterface $ruleRepository;
     public readonly UploadedFileRepositoryInterface $fileRepository;
     public readonly ValidatorServiceInterface $validator;
@@ -37,6 +39,7 @@ final class AppServiceProvider
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         $this->bootRuleTypes();
+        $this->paramCaster = new RuleParamCaster($this->configManager);
 
         $this->registry = new TenantRepository($pdo);
         $this->ruleRepository = new ValidationRuleRepository($this->registry, $this->configManager);

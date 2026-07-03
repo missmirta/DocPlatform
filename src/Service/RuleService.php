@@ -9,7 +9,7 @@ use DocPlatform\Exceptions\RuleNotFoundException;
 use DocPlatform\Model\Document;
 use DocPlatform\Model\ValidationResult;
 use DocPlatform\Repository\Contracts\ValidationRuleRepositoryInterface;
-use DocPlatform\RuleConfiguration\RuleConfigurationManager;
+use DocPlatform\RuleConfiguration\Contracts\RuleConfigurationRegistryInterface;
 use DocPlatform\RuleConfiguration\RuleType;
 use DocPlatform\Service\Contracts\RuleServiceInterface;
 use DocPlatform\Service\Contracts\ValidatorServiceInterface;
@@ -18,7 +18,7 @@ final class RuleService implements RuleServiceInterface
 {
     public function __construct(
         private readonly ValidationRuleRepositoryInterface $repository,
-        private readonly RuleConfigurationManager $configManager,
+        private readonly RuleConfigurationRegistryInterface $configManager,
         private readonly ValidatorServiceInterface $validator,
     ) {}
 

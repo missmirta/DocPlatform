@@ -7,7 +7,8 @@ namespace DocPlatform\Http\Controllers;
 use DocPlatform\Model\ValidationRule;
 use DocPlatform\Repository\Contracts\TenantRepositoryInterface;
 use DocPlatform\Repository\Contracts\ValidationRuleRepositoryInterface;
-use DocPlatform\RuleConfiguration\RuleConfigurationManager;
+use DocPlatform\RuleConfiguration\Contracts\RuleConfigurationRegistryInterface;
+use DocPlatform\RuleConfiguration\RuleParamCaster;
 use DocPlatform\RuleConfiguration\RuleType;
 
 // TODO: RuleController renders HTML templates for the browser UI (GET /rules, POST /rules/create, etc.)
@@ -19,7 +20,7 @@ class RuleController
     public function index(
         string $tenantId,
         ValidationRuleRepositoryInterface $ruleRepo,
-        RuleConfigurationManager $schemaManager,
+        RuleConfigurationRegistryInterface $schemaManager,
         TenantRepositoryInterface $registry,
     ): void {
         $rules = $ruleRepo->listRules($tenantId);
@@ -36,7 +37,7 @@ class RuleController
 
     public function create(
         string $tenantId,
-        RuleConfigurationManager $schemaManager,
+        RuleConfigurationRegistryInterface $schemaManager,
         TenantRepositoryInterface $registry,
     ): void {
         $schemas = $schemaManager->allSchemas();
@@ -54,8 +55,9 @@ class RuleController
     public function store(
         array $post,
         ValidationRuleRepositoryInterface $ruleRepo,
-        RuleConfigurationManager $schemaManager,
+        RuleConfigurationRegistryInterface $schemaManager,
         TenantRepositoryInterface $registry,
+        RuleParamCaster $paramCaster,
     ): void {
         $tenantId = $post['tenant'] ?? '';
         $ruleType = RuleType::from($post['rule_type'] ?? '');
@@ -63,7 +65,7 @@ class RuleController
         $tenants = $registry->listTenants();
 
         $rawParams = $post['params'] ?? [];
-        $params = $schemaManager->buildFormParams($rawParams, $ruleType);
+        $params = $paramCaster->buildFormParams($rawParams, $ruleType);
 
         $errors = $schemaManager->configurationFor($ruleType)->validate($params);
 
@@ -92,8 +94,9 @@ class RuleController
         string $tenantId,
         int $ruleId,
         ValidationRuleRepositoryInterface $ruleRepo,
-        RuleConfigurationManager $schemaManager,
+        RuleConfigurationRegistryInterface $schemaManager,
         TenantRepositoryInterface $registry,
+        RuleParamCaster $paramCaster,
     ): void {
         $rule = $ruleRepo->findById($tenantId, $ruleId);
 
@@ -106,7 +109,7 @@ class RuleController
         $tenants = $registry->listTenants();
         $ruleType = $rule->ruleType;
 
-        $displayParams = $schemaManager->prepareDisplayParams($rule->parameters, $ruleType);
+        $displayParams = $paramCaster->prepareDisplayParams($rule->parameters, $ruleType);
 
         $this->render('rules/edit', [
             'tenantId'      => $tenantId,
@@ -121,8 +124,9 @@ class RuleController
     public function update(
         array $post,
         ValidationRuleRepositoryInterface $ruleRepo,
-        RuleConfigurationManager $schemaManager,
+        RuleConfigurationRegistryInterface $schemaManager,
         TenantRepositoryInterface $registry,
+        RuleParamCaster $paramCaster,
     ): void {
         $tenantId = $post['tenant'] ?? '';
         $ruleId = (int)($post['rule_id'] ?? 0);
@@ -131,14 +135,14 @@ class RuleController
         $tenants = $registry->listTenants();
 
         $rawParams = $post['params'] ?? [];
-        $params = $schemaManager->buildFormParams($rawParams, $ruleType);
+        $params = $paramCaster->buildFormParams($rawParams, $ruleType);
 
         $errors = $schemaManager->configurationFor($ruleType)->validate($params);
 
         if (!empty($errors)) {
             $rule = $ruleRepo->findById($tenantId, $ruleId);
 
-            $displayParams = $schemaManager->prepareDisplayParams($params, $ruleType);
+            $displayParams = $paramCaster->prepareDisplayParams($params, $ruleType);
 
             $this->render('rules/edit', [
                 'tenantId'      => $tenantId,

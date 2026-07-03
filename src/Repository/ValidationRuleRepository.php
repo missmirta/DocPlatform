@@ -8,7 +8,7 @@ use DocPlatform\Exceptions\RuleNotFoundException;
 use DocPlatform\Model\ValidationRule;
 use DocPlatform\Repository\Contracts\TenantRepositoryInterface;
 use DocPlatform\Repository\Contracts\ValidationRuleRepositoryInterface;
-use DocPlatform\RuleConfiguration\RuleConfigurationManager;
+use DocPlatform\RuleConfiguration\Contracts\RuleConfigurationRegistryInterface;
 use DocPlatform\RuleConfiguration\RuleType;
 use JsonException;
 use PDO;
@@ -17,7 +17,7 @@ final class ValidationRuleRepository implements ValidationRuleRepositoryInterfac
 {
     public function __construct(
         private readonly TenantRepositoryInterface $registry,
-        private readonly RuleConfigurationManager $configManager,
+        private readonly RuleConfigurationRegistryInterface $configManager,
     ) {}
 
     public function getRulesFor(string $tenantId): array

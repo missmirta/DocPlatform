@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace DocPlatform\RuleConfiguration;
 
-use Closure;
 use DocPlatform\Exceptions\UnknownRuleTypeException;
+use DocPlatform\RuleConfiguration\Contracts\RuleConfigurationRegistryInterface;
 use DocPlatform\RuleConfiguration\Contracts\ValidationRuleInterface;
 
-final class RuleConfigurationManager
+final class RuleConfigurationManager implements RuleConfigurationRegistryInterface
 {
     /** @var array<string, AbstractRuleConfiguration> */
     private array $configurations = [];
@@ -27,8 +27,7 @@ final class RuleConfigurationManager
     /** @throws UnknownRuleTypeException */
     public function configurationFor(RuleType $ruleType): AbstractRuleConfiguration
     {
-        return $this->configurations[$ruleType->value]
-            ?? throw new UnknownRuleTypeException($ruleType->value);
+        return $this->configurations[$ruleType->value] ?? throw new UnknownRuleTypeException($ruleType->value);
     }
 
     /** @return RuleType[] */
@@ -46,11 +45,11 @@ final class RuleConfigurationManager
         $config = $this->configurationFor($ruleType);
 
         return [
-            'type'        => $ruleType->value,
-            'label'       => $config->label(),
-            'description' => $config->description(),
-            'parameters'  => $config->parameterSchema(),
-            'defaults'    => $config->defaults(),
+            SchemaField::Type->value        => $ruleType->value,
+            SchemaField::Label->value       => $config->label(),
+            SchemaField::Description->value => $config->description(),
+            SchemaField::Parameters->value  => $config->parameterSchema(),
+            SchemaField::Defaults->value    => $config->defaults(),
         ];
     }
 
@@ -62,41 +61,5 @@ final class RuleConfigurationManager
             $schemas[$type->value] = $this->schemaFor($type);
         }
         return $schemas;
-    }
-
-    public function buildFormParams(array $rawParams, RuleType $ruleType): array
-    {
-        $schema = $this->configurationFor($ruleType)->parameterSchema();
-        $params = array_intersect_key($rawParams, $schema);
-
-        return $this->castParams($params, $schema, function (mixed $value, string $type): mixed {
-            if ($type === 'integer' && is_string($value)) {
-                return (int) $value;
-            }
-            if ($type === 'array' && is_string($value)) {
-                return array_values(array_filter(array_map('trim', explode("\n", $value))));
-            }
-            return $value;
-        });
-    }
-
-    public function prepareDisplayParams(array $params, RuleType $ruleType): array
-    {
-        $schema = $this->configurationFor($ruleType)->parameterSchema();
-
-        return $this->castParams($params, $schema, function (mixed $value, string $type): mixed {
-            if ($type === 'array' && is_array($value)) {
-                return implode("\n", $value);
-            }
-            return $value;
-        });
-    }
-
-    private function castParams(array $params, array $schema, Closure $cast): array
-    {
-        foreach ($params as $field => $value) {
-            $params[$field] = $cast($value, $schema[$field]['type'] ?? '');
-        }
-        return $params;
     }
 }
