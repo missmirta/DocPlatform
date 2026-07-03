@@ -19,7 +19,7 @@ final class ValidatorServiceTest extends TestCase
     protected function setUp(): void
     {
         $this->service = new ValidatorService();
-        $this->document = new Document('id', 'content', 'text', [], '2024-01-01');
+        $this->document = new Document('id', 'tenant', 'content', 'text', [], '2024-01-01');
     }
 
     private function passingRule(): ValidationRuleInterface
@@ -37,64 +37,72 @@ final class ValidatorServiceTest extends TestCase
         };
     }
 
-    public function test_errors_returns_empty_when_no_rules_provided(): void
+    public function test_validate_returns_empty_errors_when_no_rules_provided(): void
     {
-        $this->assertSame([], $this->service->errors($this->document, []));
+        $result = $this->service->validate($this->document, []);
+
+        $this->assertSame([], $result->errors);
     }
 
-    public function test_errors_returns_empty_when_all_rules_pass(): void
+    public function test_validate_returns_empty_errors_when_all_rules_pass(): void
     {
-        $errors = $this->service->errors($this->document, [
+        $result = $this->service->validate($this->document, [
             $this->passingRule(),
             $this->passingRule(),
         ]);
 
-        $this->assertSame([], $errors);
+        $this->assertSame([], $result->errors);
     }
 
-    public function test_errors_returns_messages_from_failing_rule(): void
+    public function test_validate_returns_messages_from_failing_rule(): void
     {
-        $errors = $this->service->errors($this->document, [
+        $result = $this->service->validate($this->document, [
             $this->failingRule('error one'),
         ]);
 
-        $this->assertSame(['error one'], $errors);
+        $this->assertSame(['error one'], $result->errors);
     }
 
-    public function test_errors_merges_messages_from_multiple_failing_rules(): void
+    public function test_validate_merges_messages_from_multiple_failing_rules(): void
     {
-        $errors = $this->service->errors($this->document, [
+        $result = $this->service->validate($this->document, [
             $this->failingRule('error A'),
             $this->failingRule('error B'),
         ]);
 
-        $this->assertSame(['error A', 'error B'], $errors);
+        $this->assertSame(['error A', 'error B'], $result->errors);
     }
 
-    public function test_errors_collects_multiple_messages_from_one_rule(): void
+    public function test_validate_collects_multiple_messages_from_one_rule(): void
     {
-        $errors = $this->service->errors($this->document, [
+        $result = $this->service->validate($this->document, [
             $this->failingRule('error 1', 'error 2'),
         ]);
 
-        $this->assertSame(['error 1', 'error 2'], $errors);
+        $this->assertSame(['error 1', 'error 2'], $result->errors);
     }
 
-    public function test_is_valid_returns_true_when_no_rules_provided(): void
+    public function test_is_valid_true_when_no_rules_provided(): void
     {
-        $this->assertTrue($this->service->isValid($this->document, []));
+        $result = $this->service->validate($this->document, []);
+
+        $this->assertTrue($result->isValid);
     }
 
-    public function test_is_valid_returns_true_when_all_rules_pass(): void
+    public function test_is_valid_true_when_all_rules_pass(): void
     {
-        $this->assertTrue($this->service->isValid($this->document, [$this->passingRule()]));
+        $result = $this->service->validate($this->document, [$this->passingRule()]);
+
+        $this->assertTrue($result->isValid);
     }
 
-    public function test_is_valid_returns_false_when_any_rule_fails(): void
+    public function test_is_valid_false_when_any_rule_fails(): void
     {
-        $this->assertFalse($this->service->isValid($this->document, [
+        $result = $this->service->validate($this->document, [
             $this->passingRule(),
             $this->failingRule('something wrong'),
-        ]));
+        ]);
+
+        $this->assertFalse($result->isValid);
     }
 }

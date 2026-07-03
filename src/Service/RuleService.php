@@ -7,6 +7,7 @@ namespace DocPlatform\Service;
 use DocPlatform\Exceptions\DuplicateRuleTypeException;
 use DocPlatform\Exceptions\RuleNotFoundException;
 use DocPlatform\Model\Document;
+use DocPlatform\Model\ValidationResult;
 use DocPlatform\Repository\Contracts\ValidationRuleRepositoryInterface;
 use DocPlatform\RuleConfiguration\RuleConfigurationManager;
 use DocPlatform\RuleConfiguration\RuleType;
@@ -64,9 +65,8 @@ final class RuleService implements RuleServiceInterface
         return $this->configManager->allSchemas();
     }
 
-    /** @return string[] */
-    public function validate(string $tenantId, Document $document): array
+    public function validate(string $tenantId, Document $document): ValidationResult
     {
-        return $this->validator->errors($document, $this->repository->getRulesFor($tenantId));
+        return $this->validator->validate($document, $this->repository->getRulesFor($tenantId));
     }
 }

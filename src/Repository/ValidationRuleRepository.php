@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace DocPlatform\Repository;
 
 use DocPlatform\Exceptions\RuleNotFoundException;
-use DocPlatform\Exceptions\UnknownTenantException;
 use DocPlatform\Model\ValidationRule;
 use DocPlatform\Repository\Contracts\TenantRepositoryInterface;
 use DocPlatform\Repository\Contracts\ValidationRuleRepositoryInterface;
@@ -29,10 +28,6 @@ final class ValidationRuleRepository implements ValidationRuleRepositoryInterfac
         );
         $stmt->execute([]);
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        if ($rows === []) {
-            throw new UnknownTenantException($tenantId);
-        }
 
         return array_map(
             fn(array $row) => $this->configManager->create(

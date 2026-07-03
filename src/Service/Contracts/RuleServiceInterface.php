@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace DocPlatform\Service\Contracts;
 
 use DocPlatform\Model\Document;
+use DocPlatform\Model\ValidationResult;
 use DocPlatform\RuleConfiguration\RuleType;
 
 interface RuleServiceInterface
@@ -14,6 +15,5 @@ interface RuleServiceInterface
     public function remove(string $tenantId, int $ruleId): void;
     public function index(string $tenantId): array;
     public function availableRuleTypes(): array;
-    /** @return string[] */
-    public function validate(string $tenantId, Document $document): array;
+    public function validate(string $tenantId, Document $document): ValidationResult;
 }

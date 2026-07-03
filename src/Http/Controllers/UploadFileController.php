@@ -29,20 +29,19 @@ class UploadFileController
         $params = UploadRequest::fromRaw($post, $files);
 
         $docId = 'doc-' . bin2hex(random_bytes(8));
-        $doc = new Document($docId, $params->content, $params->textContent, $params->metadata, date('c'));
+        $doc = new Document($docId, $params->tenantId, $params->content, $params->textContent, $params->metadata, date('c'));
 
-        $errors = $ruleService->validate($params->tenantId, $doc);
-        $isValid = empty($errors);
+        $result = $ruleService->validate($params->tenantId, $doc);
 
-        if ($isValid) {
+        if ($result->isValid) {
             $fileRepo->save($params->tenantId, $doc);
         }
 
         $this->render('upload/result', [
-            'errors'   => $errors,
+            'errors'   => $result->errors,
             'doc'      => $doc,
             'tenantId' => $params->tenantId,
-            'saved'    => $isValid,
+            'saved'    => $result->isValid,
         ]);
     }
 

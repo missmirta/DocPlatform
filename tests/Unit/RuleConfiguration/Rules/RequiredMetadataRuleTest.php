@@ -14,7 +14,7 @@ final class RequiredMetadataRuleTest extends TestCase
 {
     private function doc(array $metadata): Document
     {
-        return new Document('id', '', '', $metadata, '2024-01-01');
+        return new Document('id', 'tenant', '', '', $metadata, '2024-01-01');
     }
 
     public function test_validate_passes_when_all_required_fields_are_present(): void

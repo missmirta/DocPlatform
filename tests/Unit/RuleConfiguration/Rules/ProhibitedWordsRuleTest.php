@@ -14,7 +14,7 @@ final class ProhibitedWordsRuleTest extends TestCase
 {
     private function doc(string $textContent): Document
     {
-        return new Document('id', '', $textContent, [], '2024-01-01');
+        return new Document('id', 'tenant', '', $textContent, [], '2024-01-01');
     }
 
     public function test_validate_passes_when_no_prohibited_word_present(): void

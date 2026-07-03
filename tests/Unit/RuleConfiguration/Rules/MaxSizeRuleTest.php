@@ -14,7 +14,7 @@ final class MaxSizeRuleTest extends TestCase
 {
     private function doc(string $content): Document
     {
-        return new Document('id', $content, '', [], '2024-01-01');
+        return new Document('id', 'tenant', $content, '', [], '2024-01-01');
     }
 
     public function test_validate_passes_when_content_is_within_limit(): void
