@@ -7,9 +7,9 @@ namespace DocPlatform\Http\Controllers;
 use DocPlatform\Model\ValidationRule;
 use DocPlatform\Repository\Contracts\TenantRepositoryInterface;
 use DocPlatform\Repository\Contracts\ValidationRuleRepositoryInterface;
-use DocPlatform\RuleConfiguration\Contracts\RuleConfigurationRegistryInterface;
-use DocPlatform\RuleConfiguration\RuleParamCaster;
-use DocPlatform\RuleConfiguration\RuleType;
+use DocPlatform\Rule\Contracts\RuleConfigurationRegistryInterface;
+use DocPlatform\Rule\Enum\RuleType;
+use DocPlatform\Rule\RuleParamCaster;
 
 // TODO: RuleController renders HTML templates for the browser UI (GET /rules, POST /rules/create, etc.)
 // So, it is needed just for demo.

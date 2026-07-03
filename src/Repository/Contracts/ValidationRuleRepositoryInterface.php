@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DocPlatform\Repository\Contracts;
 
 use DocPlatform\Model\ValidationRule;
-use DocPlatform\RuleConfiguration\RuleType;
+use DocPlatform\Rule\Enum\RuleType;
 
 interface ValidationRuleRepositoryInterface
 {

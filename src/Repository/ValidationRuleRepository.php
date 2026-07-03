@@ -8,8 +8,8 @@ use DocPlatform\Exceptions\RuleNotFoundException;
 use DocPlatform\Model\ValidationRule;
 use DocPlatform\Repository\Contracts\TenantRepositoryInterface;
 use DocPlatform\Repository\Contracts\ValidationRuleRepositoryInterface;
-use DocPlatform\RuleConfiguration\Contracts\RuleConfigurationRegistryInterface;
-use DocPlatform\RuleConfiguration\RuleType;
+use DocPlatform\Rule\Contracts\RuleConfigurationRegistryInterface;
+use DocPlatform\Rule\Enum\RuleType;
 use JsonException;
 use PDO;
 

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DocPlatform\Model;
 
-use DocPlatform\RuleConfiguration\RuleType;
+use DocPlatform\Rule\Enum\RuleType;
 
 final class ValidationRule
 {

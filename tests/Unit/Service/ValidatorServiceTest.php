@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Service;
 
 use DocPlatform\Model\Document;
-use DocPlatform\RuleConfiguration\Contracts\ValidationRuleInterface;
+use DocPlatform\Rule\Contracts\ValidationRuleInterface;
 use DocPlatform\Service\ValidatorService;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;

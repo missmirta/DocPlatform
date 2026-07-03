@@ -6,7 +6,7 @@ namespace DocPlatform\Http\Requests;
 
 use DocPlatform\Exceptions\InvalidRuleParametersException;
 use DocPlatform\Exceptions\UnknownRuleTypeException;
-use DocPlatform\RuleConfiguration\RuleType;
+use DocPlatform\Rule\Enum\RuleType;
 
 final class StoreRuleRequest
 {

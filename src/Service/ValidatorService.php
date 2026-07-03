@@ -6,7 +6,7 @@ namespace DocPlatform\Service;
 
 use DocPlatform\Model\Document;
 use DocPlatform\Model\ValidationResult;
-use DocPlatform\RuleConfiguration\Contracts\ValidationRuleInterface;
+use DocPlatform\Rule\Contracts\ValidationRuleInterface;
 use DocPlatform\Service\Contracts\ValidatorServiceInterface;
 
 final class ValidatorService implements ValidatorServiceInterface

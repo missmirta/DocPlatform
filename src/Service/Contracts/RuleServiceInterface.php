@@ -6,7 +6,7 @@ namespace DocPlatform\Service\Contracts;
 
 use DocPlatform\Model\Document;
 use DocPlatform\Model\ValidationResult;
-use DocPlatform\RuleConfiguration\RuleType;
+use DocPlatform\Rule\Enum\RuleType;
 
 interface RuleServiceInterface
 {

@@ -5,11 +5,11 @@ declare(strict_types=1);
 require __DIR__ . '/vendor/autoload.php';
 
 use DocPlatform\Model\Document;
-use DocPlatform\RuleConfiguration\Configurations\MaxSizeRule;
-use DocPlatform\RuleConfiguration\Configurations\ProhibitedWordsRule;
-use DocPlatform\RuleConfiguration\Configurations\RequiredMetadataRule;
-use DocPlatform\RuleConfiguration\RuleConfigurationManager;
-use DocPlatform\RuleConfiguration\RuleType;
+use DocPlatform\Rule\Configurations\MaxSizeRule;
+use DocPlatform\Rule\Configurations\ProhibitedWordsRule;
+use DocPlatform\Rule\Configurations\RequiredMetadataRule;
+use DocPlatform\Rule\Enum\RuleType;
+use DocPlatform\Rule\RuleConfigurationManager;
 use DocPlatform\Service\ValidatorService;
 
 // According to Test task:
