@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace DocPlatform\Rule;
 
 use DocPlatform\Exception\UnknownRuleTypeException;
-use DocPlatform\Rule\Contracts\RuleConfigurationRegistryInterface;
+use DocPlatform\Rule\Contracts\RuleConfigurationManagerInterface;
 use DocPlatform\Rule\Contracts\ValidationRuleInterface;
 use DocPlatform\Rule\Enum\RuleType;
 use DocPlatform\Rule\Enum\SchemaField;
 
-final class RuleConfigurationManager implements RuleConfigurationRegistryInterface
+final class RuleConfigurationManager implements RuleConfigurationManagerInterface
 {
     /** @var array<string, AbstractRuleConfiguration> */
     private array $configurations = [];

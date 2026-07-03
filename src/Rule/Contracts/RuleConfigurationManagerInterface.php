@@ -7,7 +7,7 @@ namespace DocPlatform\Rule\Contracts;
 use DocPlatform\Rule\AbstractRuleConfiguration;
 use DocPlatform\Rule\Enum\RuleType;
 
-interface RuleConfigurationRegistryInterface
+interface RuleConfigurationManagerInterface
 {
     public function register(RuleType $ruleType, AbstractRuleConfiguration $configuration): void;
 
