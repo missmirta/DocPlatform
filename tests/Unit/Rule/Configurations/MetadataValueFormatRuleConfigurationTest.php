@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Rule\Configurations;
 
-use DocPlatform\Exception\InvalidRuleParametersException;
 use DocPlatform\Rule\Configurations\MetadataValueFormatRule;
 use DocPlatform\Rule\Rules\MetadataValueFormatRule as MetadataValueFormatRuleImpl;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -65,12 +64,5 @@ final class MetadataValueFormatRuleConfigurationTest extends TestCase
         $rule = $this->config->create(['field' => 'ref', 'pattern' => '/^\d+$/']);
 
         $this->assertInstanceOf(MetadataValueFormatRuleImpl::class, $rule);
-    }
-
-    public function test_validate_and_merge_defaults_throws_on_invalid_params(): void
-    {
-        $this->expectException(InvalidRuleParametersException::class);
-
-        $this->config->validateAndMergeDefaults([]);
     }
 }

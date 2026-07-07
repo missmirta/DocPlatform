@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace DocPlatform\Rule\Configurations;
 
-use DocPlatform\Rule\AbstractRuleConfiguration;
+use DocPlatform\Rule\Contracts\RuleConfigurationInterface;
 use DocPlatform\Rule\Contracts\ValidationRuleInterface;
 use DocPlatform\Rule\Rules\ProhibitedWordsRule as ProhibitedWordsRuleImpl;
 
-final class ProhibitedWordsRule extends AbstractRuleConfiguration
+final class ProhibitedWordsRule implements RuleConfigurationInterface
 {
     public function create(array $parameters): ValidationRuleInterface
     {

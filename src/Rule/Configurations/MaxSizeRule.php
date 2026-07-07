@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace DocPlatform\Rule\Configurations;
 
-use DocPlatform\Rule\AbstractRuleConfiguration;
+use DocPlatform\Rule\Contracts\RuleConfigurationInterface;
 use DocPlatform\Rule\Contracts\ValidationRuleInterface;
 use DocPlatform\Rule\Rules\MaxSizeRule as MaxSizeRuleImpl;
 
-final class MaxSizeRule extends AbstractRuleConfiguration
+final class MaxSizeRule implements RuleConfigurationInterface
 {
     public function create(array $parameters): ValidationRuleInterface
     {

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace DocPlatform\Rule\Configurations;
 
-use DocPlatform\Rule\AbstractRuleConfiguration;
+use DocPlatform\Rule\Contracts\RuleConfigurationInterface;
 use DocPlatform\Rule\Contracts\ValidationRuleInterface;
 use DocPlatform\Rule\Rules\AllowedContentTypeRule as AllowedContentTypeRuleImpl;
 
-final class AllowedContentTypeRule extends AbstractRuleConfiguration
+final class AllowedContentTypeRule implements RuleConfigurationInterface
 {
     public function create(array $parameters): ValidationRuleInterface
     {

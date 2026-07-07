@@ -10,6 +10,5 @@ use DocPlatform\Rule\Contracts\ValidationRuleInterface;
 
 interface ValidatorServiceInterface
 {
-    /** @param ValidationRuleInterface[] $rules */
-    public function validate(Document $document, array $rules): ValidationResult;
+    public function validate(Document $document, ValidationRuleInterface ...$rules): ValidationResult;
 }

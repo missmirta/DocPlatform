@@ -8,40 +8,27 @@ use DocPlatform\Model\Document;
 use DocPlatform\Rule\Configurations\MaxSizeRule;
 use DocPlatform\Rule\Configurations\ProhibitedWordsRule;
 use DocPlatform\Rule\Configurations\RequiredMetadataRule;
-use DocPlatform\Rule\Enum\RuleType;
-use DocPlatform\Rule\RuleConfigurationManager;
+use DocPlatform\Rule\TenantRuleProvider;
 use DocPlatform\Service\ValidatorService;
 
-// Short integration script that demonstrates:
-//–	Creating several validation rules
-//–	Creating a validator
-//–	Determining which validation rules apply for a given tenant ID
-//–	Validating a document using those rules
-//–	Handling both success and validation errors
+// 1. Build rule instances for each tenant using configuration objects
+$provider = new TenantRuleProvider();
 
-// 1. Register available rule types
-$manager = new RuleConfigurationManager();
-$manager->register(RuleType::MaxSizeRule,          new MaxSizeRule());
-$manager->register(RuleType::RequiredMetadataRule, new RequiredMetadataRule());
-$manager->register(RuleType::ProhibitedWordsRule,  new ProhibitedWordsRule());
+$maxSizeConfig      = new MaxSizeRule();
+$requiredMetaConfig = new RequiredMetadataRule();
+$prohibitedConfig   = new ProhibitedWordsRule();
 
-// 2. Define which rules apply per tenant
-$tenantRules = [
-    'tenant-acme' => [
-        $manager->create(RuleType::MaxSizeRule,          ['maxBytes' => 1000]),
-        $manager->create(RuleType::RequiredMetadataRule, ['fields' => ['author', 'type']]),
-        $manager->create(RuleType::ProhibitedWordsRule,  ['words' => ['confidential', 'secret']]),
-    ],
-    'tenant-beta' => [
-        $manager->create(RuleType::MaxSizeRule,          ['maxBytes' => 500]),
-        $manager->create(RuleType::RequiredMetadataRule, ['fields' => ['title']]),
-    ],
-];
+$provider->addRule('tenant-acme', $maxSizeConfig->create(['maxBytes' => 1000]));
+$provider->addRule('tenant-acme', $requiredMetaConfig->create(['fields' => ['author', 'type']]));
+$provider->addRule('tenant-acme', $prohibitedConfig->create(['words' => ['confidential', 'secret']]));
 
-// 3. Create the validator
+$provider->addRule('tenant-beta', $maxSizeConfig->create(['maxBytes' => 500]));
+$provider->addRule('tenant-beta', $requiredMetaConfig->create(['fields' => ['title']]));
+
+// 2. Create the validator
 $validator = new ValidatorService();
 
-// 4. Validate a document that passes all rules
+// 3. Validate a document that passes all rules
 $passing = new Document(
     id:          'doc-001',
     tenantId:    'tenant-acme',
@@ -51,10 +38,10 @@ $passing = new Document(
     uploadedAt:  '2024-01-01T00:00:00Z',
 );
 
-$result = $validator->validate($passing, $tenantRules['tenant-acme']);
+$result = $validator->validate($passing, ...$provider->getRulesForTenant('tenant-acme'));
 echo 'doc-001 (tenant-acme): ' . ($result->isValid ? 'PASSED' : 'FAILED — ' . implode('; ', $result->errors)) . PHP_EOL;
 
-// 5. Validate a document that fails multiple rules
+// 4. Validate a document that fails multiple rules
 $failing = new Document(
     id:          'doc-002',
     tenantId:    'tenant-acme',
@@ -64,10 +51,10 @@ $failing = new Document(
     uploadedAt:  '2024-01-01T00:00:00Z',
 );
 
-$result = $validator->validate($failing, $tenantRules['tenant-acme']);
+$result = $validator->validate($failing, ...$provider->getRulesForTenant('tenant-acme'));
 echo 'doc-002 (tenant-acme): ' . ($result->isValid ? 'PASSED' : 'FAILED — ' . implode('; ', $result->errors)) . PHP_EOL;
 
-// 6. Validate against a different tenant's rules
+// 5. Validate against a different tenant's rules
 $betaDoc = new Document(
     id:          'doc-003',
     tenantId:    'tenant-beta',
@@ -77,5 +64,5 @@ $betaDoc = new Document(
     uploadedAt:  '2024-01-01T00:00:00Z',
 );
 
-$result = $validator->validate($betaDoc, $tenantRules['tenant-beta']);
+$result = $validator->validate($betaDoc, ...$provider->getRulesForTenant('tenant-beta'));
 echo 'doc-003 (tenant-beta): ' . ($result->isValid ? 'PASSED' : 'FAILED — ' . implode('; ', $result->errors)) . PHP_EOL;

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace DocPlatform\Rule\Configurations;
 
-use DocPlatform\Rule\AbstractRuleConfiguration;
+use DocPlatform\Rule\Contracts\RuleConfigurationInterface;
 use DocPlatform\Rule\Contracts\ValidationRuleInterface;
 use DocPlatform\Rule\Rules\MetadataValueFormatRule as MetadataValueFormatRuleImpl;
 
-final class MetadataValueFormatRule extends AbstractRuleConfiguration
+final class MetadataValueFormatRule implements RuleConfigurationInterface
 {
     public function create(array $parameters): ValidationRuleInterface
     {

@@ -11,8 +11,7 @@ use DocPlatform\Service\Contracts\ValidatorServiceInterface;
 
 final class ValidatorService implements ValidatorServiceInterface
 {
-    /** @param ValidationRuleInterface[] $rules */
-    public function validate(Document $document, array $rules): ValidationResult
+    public function validate(Document $document, ValidationRuleInterface ...$rules): ValidationResult
     {
         $errors = [];
         foreach ($rules as $rule) {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Rule\Configurations;
 
-use DocPlatform\Exception\InvalidRuleParametersException;
 use DocPlatform\Rule\Configurations\MaxSizeRule;
 use DocPlatform\Rule\Rules\MaxSizeRule as MaxSizeRuleImpl;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -58,19 +57,5 @@ final class MaxSizeRuleConfigurationTest extends TestCase
         $rule = $this->config->create(['maxBytes' => 512]);
 
         $this->assertInstanceOf(MaxSizeRuleImpl::class, $rule);
-    }
-
-    public function test_validate_and_merge_defaults_throws_on_invalid_params(): void
-    {
-        $this->expectException(InvalidRuleParametersException::class);
-
-        $this->config->validateAndMergeDefaults([]);
-    }
-
-    public function test_validate_and_merge_defaults_returns_params_on_valid_input(): void
-    {
-        $result = $this->config->validateAndMergeDefaults(['maxBytes' => 2048]);
-
-        $this->assertSame(['maxBytes' => 2048], $result);
     }
 }

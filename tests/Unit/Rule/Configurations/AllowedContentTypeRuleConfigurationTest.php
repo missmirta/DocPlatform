@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Rule\Configurations;
 
-use DocPlatform\Exception\InvalidRuleParametersException;
 use DocPlatform\Rule\Configurations\AllowedContentTypeRule;
 use DocPlatform\Rule\Rules\AllowedContentTypeRule as AllowedContentTypeRuleImpl;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -58,12 +57,5 @@ final class AllowedContentTypeRuleConfigurationTest extends TestCase
         $rule = $this->config->create(['types' => ['pdf']]);
 
         $this->assertInstanceOf(AllowedContentTypeRuleImpl::class, $rule);
-    }
-
-    public function test_validate_and_merge_defaults_throws_on_invalid_params(): void
-    {
-        $this->expectException(InvalidRuleParametersException::class);
-
-        $this->config->validateAndMergeDefaults([]);
     }
 }

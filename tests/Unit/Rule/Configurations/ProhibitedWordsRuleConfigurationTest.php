@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Rule\Configurations;
 
-use DocPlatform\Exception\InvalidRuleParametersException;
 use DocPlatform\Rule\Configurations\ProhibitedWordsRule;
 use DocPlatform\Rule\Rules\ProhibitedWordsRule as ProhibitedWordsRuleImpl;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -58,22 +57,5 @@ final class ProhibitedWordsRuleConfigurationTest extends TestCase
         $rule = $this->config->create(['words' => ['spam']]);
 
         $this->assertInstanceOf(ProhibitedWordsRuleImpl::class, $rule);
-    }
-
-    public function test_validate_and_merge_defaults_throws_on_invalid_params(): void
-    {
-        $this->expectException(InvalidRuleParametersException::class);
-
-        $this->config->validateAndMergeDefaults([]);
-    }
-
-    public function test_invalid_rule_parameters_exception_exposes_errors(): void
-    {
-        try {
-            $this->config->validateAndMergeDefaults([]);
-            $this->fail('Expected exception not thrown');
-        } catch (InvalidRuleParametersException $e) {
-            $this->assertNotEmpty($e->getErrors());
-        }
     }
 }
